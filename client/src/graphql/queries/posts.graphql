@@ -1,0 +1,9 @@
+query Posts($limit: Int!, $offset: Int) {
+  posts(limit: $limit, offset: $offset) {
+    id
+    created_at
+    updated_at
+    title
+    text
+  }
+}

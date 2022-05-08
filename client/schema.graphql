@@ -1,0 +1,65 @@
+type User {
+  id: Float!
+  username: String!
+  email: String!
+  password: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+# A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+scalar DateTime
+
+type Post {
+  id: Float!
+  title: String!
+  text: String!
+  points: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  creatorId: Float!
+  creator: User!
+}
+
+type FieldError {
+  field: String!
+  message: String!
+}
+
+type UserResponse {
+  errors: [FieldError!]
+  user: User
+}
+
+type Query {
+  posts(limit: Int!, offset: Int): [Post!]!
+  post(id: Int!): Post
+  me: User
+}
+
+type Mutation {
+  createPost(input: PostInput!): Post!
+  deletePost(id: Int!): String!
+  updatePost(id: Int!, title: String!): Post!
+  register(options: UsernamePasswordEmailInput!): User!
+  login(options: UsernamePasswordInput!): UserResponse!
+  logout: Boolean!
+  forgotPassword(email: String!): Boolean!
+  changePassword(token: String!, newPassword: String!): UserResponse!
+}
+
+input PostInput {
+  title: String!
+  text: String!
+}
+
+input UsernamePasswordEmailInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+input UsernamePasswordInput {
+  username: String!
+  password: String!
+}
